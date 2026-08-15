@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rafzz Official WEB</title>
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-color: #0f0b0c;
+            --card-bg: #1a1213;
+            --primary-red: #ff2a4b;
+            --glow-red: rgba(255, 42, 75, 0.8);
+            --glow-white: rgba(255, 255, 255, 0.8);
+            --text-color: #ffffff;
+            --text-muted: #a0a0a0;
+            --border-color: #2d1f22;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            padding-bottom: 40px;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            background-color: rgba(26, 18, 19, 0.95);
+            border-bottom: 2px solid var(--primary-red);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .logo .white-glow {
+            color: #ffffff;
+            font-weight: 800;
+            text-shadow: 0 0 10px var(--glow-white), 0 0 20px var(--glow-white);
+        }
+
+        .logo .red-glow {
+            color: var(--primary-red);
+            font-weight: 800;
+            text-shadow: 0 0 10px var(--glow-red), 0 0 20px var(--glow-red);
+        }
+
+        .admin-btn {
+            background: transparent;
+            color: var(--primary-red);
+            border: 1px solid var(--primary-red);
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .admin-btn:hover {
+            background: var(--primary-red);
+            color: white;
+            box-shadow: 0 0 15px var(--glow-red);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            font-size: 20px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--primary-red);
+            padding-left: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .app-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .app-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .app-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(255, 42, 75, 0.2);
+            border-color: var(--primary-red);
+        }
+
+        .app-img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .app-info {
+            padding: 15px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .app-desc {
+            color: var(--text-muted);
+            font-size: 14px;
+            margin: 10px 0;
+            line-height: 1.4;
+        }
+
+        .app-features {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            margin-bottom: 15px;
+            border-left: 2px solid var(--primary-red);
+        }
+
+        .app-features ul {
+            list-style-type: none;
+            padding-left: 5px;
+        }
+
+        .app-features li {
+            margin-bottom: 4px;
+        }
+
+        .app-features li::before {
+            content: "✓ ";
+            color: var(--primary-red);
+        }
+
+        .download-btn {
+            margin-top: auto;
+            background-color: var(--primary-red);
+            color: white;
+            text-align: center;
+            padding: 10px;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: bold;
+            transition: 0.3s;
+            display: block;
+        }
+
+        .download-btn:hover {
+            background-color: #e01e3e;
+            box-shadow: 0 0 10px var(--glow-red);
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background-color: var(--card-bg);
+            border: 2px solid var(--primary-red);
+            border-radius: 12px;
+            width: 90%;
+            max-width: 450px;
+            padding: 25px;
+            position: relative;
+            box-shadow: 0 0 25px var(--glow-red);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 24px;
+            color: white;
+            cursor: pointer;
+        }
+
+        .close-btn:hover {
+            color: var(--primary-red);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            background-color: #0f0b0c;
+            border: 1px solid var(--border-color);
+            color: white;
+            border-radius: 6px;
+            outline: none;
+        }
+
+        .form-group input:focus, .form-group textarea:focus {
+            border-color: var(--primary-red);
+        }
+
+        .submit-btn {
+            width: 100%;
+            background-color: var(--primary-red);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .submit-btn:hover {
+            box-shadow: 0 0 15px var(--glow-red);
+        }
+
+        .wa-popup-content {
+            text-align: center;
+        }
+
+        .wa-popup-content h3 {
+            color: white;
+            margin-bottom: 15px;
+            font-size: 16px;
+            line-height: 1.4;
+        }
+
+        .wa-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            color: white;
+            background-color: #25D366;
+            transition: 0.3s;
+            box-shadow: 0 0 10px rgba(37, 211, 102, 0.4);
+        }
+
+        .wa-btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 20px rgba(37, 211, 102, 0.8);
+        }
+
+        .wa-btn.backup {
+            background-color: #128C7E;
+        }
+
+        .no-apps {
+            text-align: center;
+            color: var(--text-muted);
+            grid-column: 1 / -1;
+            padding: 40px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">
+            <span class="white-glow">Rafzz</span> <span class="red-glow">Official WEB</span>
+        </div>
+        <button class="admin-btn" onclick="openLoginModal()"><i class="fa-solid fa-user-lock"></i> Admin</button>
+    </header>
+
+    <div class="container">
+        <h2 class="section-title">Daftar Aplikasi Tersedia</h2>
+        <div class="app-grid" id="appGrid">
+            <div class="no-apps"><p>Memuat data aplikasi...</p></div>
+        </div>
+    </div>
+
+    <!-- Modal Login Admin -->
+    <div class="modal-overlay" id="loginModal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('loginModal')">&times;</span>
+            <h3 style="margin-bottom: 15px; text-align: center; color: var(--primary-red);">Login Akses Admin</h3>
+            <form id="loginForm" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" id="username" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="password" required>
+                </div>
+                <button type="submit" class="submit-btn">MASUK</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Panel Upload Admin -->
+    <div class="modal-overlay" id="adminModal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('adminModal')">&times;</span>
+            <h3 style="margin-bottom: 15px; text-align: center; color: var(--primary-red);">Panel Upload APK</h3>
+            <form id="uploadForm" onsubmit="handleUpload(event)">
+                <div class="form-group">
+                    <label>Nama Aplikasi</label>
+                    <input type="text" id="appName" required placeholder="Contoh: Mobile Legends Mod">
+                </div>
+                <div class="form-group">
+                    <label>URL Gambar (Icon / Screenshot)</label>
+                    <input type="url" id="appImg" required placeholder="https://example.com/gambar.jpg">
+                </div>
+                <div class="form-group">
+                    <label>URL Link Download APK</label>
+                    <input type="url" id="appLink" required placeholder="https://example.com/file.apk">
+                </div>
+                <div class="form-group">
+                    <label>Deskripsi Aplikasi</label>
+                    <textarea id="appDesc" rows="3" required placeholder="Jelaskan secara singkat..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Fitur-Fitur APK (Pisahkan dengan koma)</label>
+                    <input type="text" id="appFeatures" placeholder="Fitur 1, Fitur 2, Fitur 3" required>
+                </div>
+                <button type="submit" class="submit-btn" id="btnSubmit">UPLOAD SEKARANG</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Pop-Up Iklan WhatsApp -->
+    <div class="modal-overlay" id="waModal" style="display: flex;">
+        <div class="modal-content wa-popup-content">
+            <span class="close-btn" onclick="closeModal('waModal')">&times;</span>
+            <h3>JOIN CHANNEL WHATSAPP RESMI RAFZZ OFFICIAL DENGAN MENGKLIK TOMBOL DI BAWAH INI</h3>
+            <a href="https://whatsapp.com/channel/0029Vb75VQWA2pL9MTcaeQ31" target="_blank" class="wa-btn">
+                <i class="fa-brands fa-whatsapp"></i> Channel WhatsApp [ UTAMA ]
+            </a>
+            <a href="https://whatsapp.com/channel/0029Vb6xLJC2Jl8LYtMSmu3L" target="_blank" class="wa-btn backup">
+                <i class="fa-brands fa-whatsapp"></i> Channel WhatsApp [ BACK UP ]
+            </a>
+        </div>
+    </div>
+
+    <!-- Firebase SDK Script -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+        // Konfigurasi Database Firebase Gratis
+        const firebaseConfig = {
+            databaseURL: "https://rafzz-official-web-default-rtdb.asia-southeast1.firebasedatabase.app/"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        const appsRef = ref(db, 'apps');
+
+        // Mendengarkan perubahan data di Database secara Real-time
+        onValue(appsRef, (snapshot) => {
+            const data = snapshot.val();
+            const grid = document.getElementById('appGrid');
+            grid.innerHTML = '';
+
+            if (!data) {
+                grid.innerHTML = '<div class="no-apps"><p>Belum ada aplikasi yang di-upload oleh Admin.</p></div>';
+                return;
+            }
+
+            Object.keys(data).reverse().forEach(key => {
+                const app = data[key];
+                const featuresList = app.features.map(f => `<li>${f}</li>`).join('');
+
+                const cardHtml = `
+                    <div class="app-card">
+                        <img src="${app.img}" alt="${app.name}" class="app-img" onerror="this.src='https://via.placeholder.com/300x180?text=No+Image'">
+                        <div class="app-info">
+                            <h3>${app.name}</h3>
+                            <p class="app-desc">${app.desc}</p>
+                            <div class="app-features">
+                                <strong>Fitur Utama:</strong>
+                                <ul>${featuresList}</ul>
+                            </div>
+                            <a href="${app.link}" target="_blank" class="download-btn">
+                                <i class="fa-solid fa-download"></i> Download APK
+                            </a>
+                        </div>
+                    </div>
+                `;
+                grid.innerHTML += cardHtml;
+            });
+        });
+
+        // Mengirim data ke Database saat Admin Upload
+        window.handleUpload = function(event) {
+            event.preventDefault();
+            const btn = document.getElementById('btnSubmit');
+            btn.innerText = "Mengunggah...";
+            btn.disabled = true;
+            
+            const name = document.getElementById('appName').value;
+            const img = document.getElementById('appImg').value;
+            const link = document.getElementById('appLink').value;
+            const desc = document.getElementById('appDesc').value;
+            const featuresRaw = document.getElementById('appFeatures').value;
+            const features = featuresRaw.split(',').map(f => f.trim()).filter(f => f !== "");
+
+            push(appsRef, {
+                name,
+                img,
+                link,
+                desc,
+                features,
+                timestamp: Date.now()
+            }).then(() => {
+                alert('Aplikasi Berhasil Di-upload ke Online Database!');
+                closeModal('adminModal');
+                document.getElementById('uploadForm').reset();
+                btn.innerText = "UPLOAD SEKARANG";
+                btn.disabled = false;
+            }).catch(err => {
+                alert('Gagal mengunggah: ' + err.message);
+                btn.innerText = "UPLOAD SEKARANG";
+                btn.disabled = false;
+            });
+        }
+    </script>
+
+    <script>
+        // JS Fungsi UI
+        function openLoginModal() {
+            document.getElementById('loginModal').style.display = 'flex';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        function handleLogin(event) {
+            event.preventDefault();
+            const user = document.getElementById('username').value;
+            const pass = document.getElementById('password').value;
+
+            if(user === 'rafzz' && pass === 'control') {
+                alert('Login Berhasil!');
+                closeModal('loginModal');
+                document.getElementById('loginForm').reset();
+                document.getElementById('adminModal').style.display = 'flex';
+            } else {
+                alert('Username atau Password Salah!');
+            }
+        }
+    </script>
+</body>
+</html>
